@@ -18,7 +18,19 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    [statusItem setTitle:@"Hello World"];
+    
+    timeRemaining = 25;
+    [statusItem setTitle:[NSString stringWithFormat:@"%ld", timeRemaining]];
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateTitle) userInfo:nil repeats:YES];
+}
+
+- (void)updateTitle {
+    timeRemaining--;
+    [statusItem setTitle:[NSString stringWithFormat:@"%ld", timeRemaining]];
+    if (timeRemaining == 0) {
+        [timer invalidate];
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

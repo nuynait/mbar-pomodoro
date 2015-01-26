@@ -10,6 +10,8 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
     NSStatusItem *statusItem;
+    NSTimer* timer;
+    NSInteger timeRemaining;
 }
 
 
