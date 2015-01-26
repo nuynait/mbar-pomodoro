@@ -17,6 +17,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [statusItem setTitle:@"Hello World"];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
