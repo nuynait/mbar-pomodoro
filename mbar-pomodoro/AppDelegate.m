@@ -15,21 +15,38 @@
 
 @implementation AppDelegate
 
+static NSString * startText = @"Start Pomodoro";
+static NSString * stayFocus = @"STAY FOCUS!!!!";
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    
-    timeRemaining = 25;
-    [statusItem setTitle:[NSString stringWithFormat:@"%ld", timeRemaining]];
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateTitle) userInfo:nil repeats:YES];
+    [statusItem setAction:@selector(startPomodoro)];
+    [statusItem setTarget:self];
+    [self resetPomodoro];
+}
+
+- (void)resetPomodoro {
+    [statusItem setTitle:startText];
+}
+
+- (void)startPomodoro {
+    if ([[statusItem title] isEqualToString:startText]) {
+        timeRemaining = 25;
+        [statusItem setTitle:[NSString stringWithFormat:@"| %ldm remaining |", timeRemaining]];
+        
+        timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateTitle) userInfo:nil repeats:YES];
+    } else {
+        [statusItem setTitle:stayFocus];
+    }
 }
 
 - (void)updateTitle {
     timeRemaining--;
-    [statusItem setTitle:[NSString stringWithFormat:@"%ld", timeRemaining]];
+    [statusItem setTitle:[NSString stringWithFormat:@"| %ldm remaining |", timeRemaining]];
     if (timeRemaining == 0) {
         [timer invalidate];
+        [self resetPomodoro];
     }
 }
 
