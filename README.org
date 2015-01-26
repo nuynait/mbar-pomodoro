@@ -1,5 +1,5 @@
 ** How to use
    1. Run in Xcode 6
    2. Click "Start Pomodoro" on menu bar
-   3. Do a 25 mins Pomodoro
+   3. Do a 25 mins Pomodoro, Display only updates once per minute
    4. Repeat
