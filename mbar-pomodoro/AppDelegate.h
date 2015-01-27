@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate> {
-    NSStatusItem *statusItem;
-    NSTimer* timer;
-    NSInteger timeRemaining;
+  NSStatusItem *statusItem;
+  NSTimer* timer;
+  NSInteger timeRemaining;
 }
 
 
