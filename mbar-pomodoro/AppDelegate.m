@@ -26,6 +26,14 @@ static NSString * stayFocus = @"STAY FOCUS!!!!";
     [self resetPomodoro];
 }
 
+- (void)sendSessionCompletedNotification {
+    NSUserNotification* notification = [[NSUserNotification alloc] init];
+    [notification setTitle:@"Pomodoro session completed"];
+    [notification setSubtitle:@"Good Job, you can have a rest now"];
+    [notification setSoundName:NSUserNotificationDefaultSoundName];
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+
 - (void)resetPomodoro {
     [statusItem setTitle:startText];
 }
@@ -46,6 +54,7 @@ static NSString * stayFocus = @"STAY FOCUS!!!!";
     [statusItem setTitle:[NSString stringWithFormat:@"| %ldm remaining |", timeRemaining]];
     if (timeRemaining == 0) {
         [timer invalidate];
+        [self sendSessionCompletedNotification];
         [self resetPomodoro];
     }
 }
