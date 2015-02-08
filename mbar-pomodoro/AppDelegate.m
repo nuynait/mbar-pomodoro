@@ -32,35 +32,35 @@
 }
 
 - (void)sendStayFocusNotification {
-    NSUserNotification* notification = [[NSUserNotification alloc] init];
-    [notification setTitle:@"Stay Focus"];
-    [notification setSoundName:NSUserNotificationDefaultSoundName];
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+  NSUserNotification* notification = [[NSUserNotification alloc] init];
+  [notification setTitle:@"Stay Focus"];
+  [notification setSoundName:NSUserNotificationDefaultSoundName];
+  [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
 - (void)resetPomodoro {
-    [statusItem setImage:[NSImage imageNamed:@"idle"]];
-    timeRemaining = 0;
+  [statusItem setImage:[NSImage imageNamed:@"idle"]];
+  timeRemaining = 0;
 }
 
 - (void)startPomodoro {
-    if (timeRemaining == 0) {
-        timeRemaining = 25;
-        [statusItem setImage:[NSImage imageNamed:[NSString stringWithFormat:@"p%ld", timeRemaining]]];
-        timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateTitle) userInfo:nil repeats:YES];
-    } else {
-        [self sendStayFocusNotification];
-    }
+  if (timeRemaining == 0) {
+    timeRemaining = 25;
+    [statusItem setImage:[NSImage imageNamed:[NSString stringWithFormat:@"p%ld", timeRemaining]]];
+    timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateTitle) userInfo:nil repeats:YES];
+  } else {
+    [self sendStayFocusNotification];
+  }
 }
 
 - (void)updateTitle {
-    timeRemaining--;
-    [statusItem setImage:[NSImage imageNamed:[NSString stringWithFormat:@"p%ld", timeRemaining]]];
-    if (timeRemaining == 0) {
-        [timer invalidate];
-        [self sendSessionCompletedNotification];
-        [self resetPomodoro];
-    }
+  timeRemaining--;
+  [statusItem setImage:[NSImage imageNamed:[NSString stringWithFormat:@"p%ld", timeRemaining]]];
+  if (timeRemaining == 0) {
+    [timer invalidate];
+    [self sendSessionCompletedNotification];
+    [self resetPomodoro];
+  }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
