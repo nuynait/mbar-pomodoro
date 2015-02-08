@@ -15,9 +15,6 @@
 
 @implementation AppDelegate
 
-static NSString * startText = @"Start Pomodoro";
-static NSString * stayFocus = @"STAY FOCUS!!!!";
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   // Insert code here to initialize your application
   statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
@@ -34,31 +31,36 @@ static NSString * stayFocus = @"STAY FOCUS!!!!";
   [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
+- (void)sendStayFocusNotification {
+    NSUserNotification* notification = [[NSUserNotification alloc] init];
+    [notification setTitle:@"Stay Focus"];
+    [notification setSoundName:NSUserNotificationDefaultSoundName];
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+}
+
 - (void)resetPomodoro {
-  [statusItem setTitle:startText];
+    [statusItem setImage:[NSImage imageNamed:@"idle"]];
+    timeRemaining = 0;
 }
 
 - (void)startPomodoro {
-  if ([[statusItem title] isEqualToString:startText]) {
-    timeRemaining = 25;
-    [statusItem setTitle:[NSString stringWithFormat:@"| %ldm remaining |", timeRemaining]];
-    
-    
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateTitle) userInfo:nil repeats:YES];
-  } else {
-    [statusItem setTitle:stayFocus];
-  }
+    if (timeRemaining == 0) {
+        timeRemaining = 25;
+        [statusItem setImage:[NSImage imageNamed:[NSString stringWithFormat:@"p%ld", timeRemaining]]];
+        timer = [NSTimer scheduledTimerWithTimeInterval:60.0f target:self selector:@selector(updateTitle) userInfo:nil repeats:YES];
+    } else {
+        [self sendStayFocusNotification];
+    }
 }
 
 - (void)updateTitle {
-  timeRemaining--;
-  [statusItem setTitle:[NSString stringWithFormat:@"| %ldm remaining |", timeRemaining]];
-  if (timeRemaining == 0) {
-    [timer invalidate];
-    [self sendSessionCompletedNotification];
-    [self resetPomodoro];
-  }
+    timeRemaining--;
+    [statusItem setImage:[NSImage imageNamed:[NSString stringWithFormat:@"p%ld", timeRemaining]]];
+    if (timeRemaining == 0) {
+        [timer invalidate];
+        [self sendSessionCompletedNotification];
+        [self resetPomodoro];
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
