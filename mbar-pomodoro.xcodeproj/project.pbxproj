@@ -398,6 +398,7 @@
 				323B6D1A1A76E226003E5195 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		323B6D1B1A76E226003E5195 /* Build configuration list for PBXNativeTarget "mbar-pomodoroTests" */ = {
 			isa = XCConfigurationList;
@@ -406,6 +407,7 @@
 				323B6D1D1A76E226003E5195 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
